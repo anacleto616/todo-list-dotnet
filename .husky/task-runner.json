@@ -1,0 +1,32 @@
+{
+  "$schema": "https://alirezanet.github.io/Husky.Net/schema.json",
+  "tasks": [
+    {
+      "name": "format-code",
+      "command": "dotnet",
+      "args": ["csharpier", "format", "${staged}"],
+      "include": [
+        "**/*.cs",
+        "**/*.csx",
+        "**/*.csproj",
+        "**/*.props",
+        "**/*.targets",
+        "**/*.xml",
+        "**/*.config"
+      ]
+    },
+    {
+      "name": "check-format",
+      "command": "git",
+      "args": ["diff", "--quiet"]
+    },
+    {
+      "name": "warn-if-diff",
+      "command": "sh",
+      "args": [
+        "-c",
+        "if ! git diff --quiet; then echo '❌ Unformatted code!'; echo '💡 Run: dotnet csharpier .'; exit 1; fi"
+      ]
+    }
+  ]
+}
