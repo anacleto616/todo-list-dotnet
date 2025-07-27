@@ -1,0 +1,13 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+set -e
+
+echo "🔧 Formatting..."
+dotnet husky run -n format-code
+
+echo "🔍 Checking for changes after format..."
+dotnet husky run -n check-format
+dotnet husky run -n warn-if-diff
+
+echo "✅ All checks passed, commit allowed!"
