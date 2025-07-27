@@ -1,0 +1,28 @@
+name: CI Dotnet
+
+on: pull_request
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🔄 Code checkout
+        uses: actions/checkout@v3
+
+      - name: 🧰 Install .NET SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: 🛠️ Restore dependencies
+        run: dotnet restore
+
+      - name: 🛠️ Restore tools
+        run: dotnet tool restore
+
+      - name: 🔧 Run formatter
+        run: dotnet csharpier format .
+
+      - name: 🔨 Compile for application
+        run: dotnet build --no-restore --configuration Release
